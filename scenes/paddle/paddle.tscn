@@ -1,0 +1,31 @@
+[gd_scene load_steps=5 format=3 uid="uid://dp5pyapm8bid0"]
+
+[ext_resource type="Script" path="res://scenes/paddle/paddle.gd" id="1_mc4bq"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ancxq"]
+width = 15
+height = 100
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_unndh"]
+size = Vector2(15, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oa4f1"]
+size = Vector2(15, 100)
+
+[node name="paddle" type="CharacterBody2D"]
+script = ExtResource("1_mc4bq")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("NoiseTexture2D_ancxq")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_unndh")
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_oa4f1")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

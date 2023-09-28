@@ -1,0 +1,167 @@
+[gd_scene load_steps=9 format=3 uid="uid://dgmh21y7dwlnc"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_ktt8w"]
+[ext_resource type="PackedScene" uid="uid://dj7tmib6f3xdx" path="res://scenes/ball/ball.tscn" id="1_uogao"]
+[ext_resource type="PackedScene" uid="uid://dp5pyapm8bid0" path="res://scenes/paddle/paddle.tscn" id="1_utvmv"]
+[ext_resource type="AudioStream" uid="uid://odf5eco6tjhl" path="res://sounds/paddle-collision.wav" id="4_1fw42"]
+[ext_resource type="AudioStream" uid="uid://f8317xvovd81" path="res://sounds/top-bottom-collision.wav" id="5_lt7xd"]
+[ext_resource type="AudioStream" uid="uid://bjlpe8vv3cuax" path="res://sounds/score-sound.wav" id="6_u0c5o"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mk3tg"]
+size = Vector2(673.5, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vsm5u"]
+size = Vector2(1167, 20)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_ktt8w")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(1.65, 1.65)
+
+[node name="borders" type="Node" parent="."]
+
+[node name="Left" type="Area2D" parent="borders"]
+position = Vector2(-572, 2)
+rotation = 1.5708
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="borders/Left"]
+position = Vector2(-1, 0)
+shape = SubResource("RectangleShape2D_mk3tg")
+
+[node name="Right" type="Area2D" parent="borders"]
+position = Vector2(573, 4)
+rotation = 1.5708
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="borders/Right"]
+shape = SubResource("RectangleShape2D_mk3tg")
+
+[node name="Top" type="Area2D" parent="borders"]
+position = Vector2(0, -322)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="borders/Top"]
+position = Vector2(-1.5, -1)
+shape = SubResource("RectangleShape2D_vsm5u")
+
+[node name="Bottom" type="Area2D" parent="borders"]
+position = Vector2(0, 331)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="borders/Bottom"]
+position = Vector2(-2, -1)
+shape = SubResource("RectangleShape2D_vsm5u")
+
+[node name="game_objects" type="Node" parent="."]
+
+[node name="paddle_left" parent="game_objects" instance=ExtResource("1_utvmv")]
+position = Vector2(-512, 0)
+
+[node name="paddle_right" parent="game_objects" instance=ExtResource("1_utvmv")]
+position = Vector2(514, 0)
+side = "right"
+
+[node name="ball" parent="game_objects" instance=ExtResource("1_uogao")]
+collision_layer = 2
+collision_mask = 0
+
+[node name="ui" type="Node" parent="."]
+
+[node name="counters" type="Control" parent="ui"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -551.0
+offset_top = -306.0
+offset_right = -511.0
+offset_bottom = -266.0
+
+[node name="p1_score" type="Label" parent="ui/counters"]
+layout_mode = 0
+offset_left = -9.0
+offset_top = -6.0
+offset_right = 111.0
+offset_bottom = 22.0
+text = "0"
+vertical_alignment = 1
+
+[node name="p2_score" type="Label" parent="ui/counters"]
+layout_mode = 0
+offset_left = 1007.0
+offset_top = -8.0
+offset_right = 1114.0
+offset_bottom = 18.0
+text = "0"
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="rally_count" type="Label" parent="ui/counters"]
+layout_mode = 0
+offset_left = 531.0
+offset_top = -5.0
+offset_right = 571.0
+offset_bottom = 18.0
+text = "0"
+horizontal_alignment = 1
+
+[node name="pause_menu" type="Control" parent="ui"]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="ui/pause_menu"]
+layout_mode = 0
+offset_left = -80.0
+offset_top = -109.0
+offset_right = 87.0
+offset_bottom = -83.0
+text = "Press ESC to unpause"
+
+[node name="unpause" type="Button" parent="ui/pause_menu"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = -32.0
+offset_right = 37.0
+offset_bottom = -1.0
+text = "Unpause"
+
+[node name="restart" type="Button" parent="ui/pause_menu"]
+layout_mode = 0
+offset_left = -40.0
+offset_right = 37.0
+offset_bottom = 31.0
+text = "Restart"
+
+[node name="quit" type="Button" parent="ui/pause_menu"]
+layout_mode = 0
+offset_left = -40.0
+offset_top = 32.0
+offset_right = 37.0
+offset_bottom = 63.0
+text = "Quit"
+
+[node name="audio" type="Node" parent="."]
+
+[node name="paddle_collision" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("4_1fw42")
+
+[node name="top_bottom_collision" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("5_lt7xd")
+
+[node name="player_scores" type="AudioStreamPlayer" parent="audio"]
+stream = ExtResource("6_u0c5o")
+
+[connection signal="body_entered" from="borders/Left" to="." method="_on_left_body_entered"]
+[connection signal="body_entered" from="borders/Right" to="." method="_on_right_body_entered"]
+[connection signal="body_entered" from="borders/Top" to="." method="_on_top_body_entered"]
+[connection signal="body_entered" from="borders/Bottom" to="." method="_on_bottom_body_entered"]
+[connection signal="pressed" from="ui/pause_menu/unpause" to="." method="_on_unpause_pressed"]
+[connection signal="pressed" from="ui/pause_menu/restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="ui/pause_menu/quit" to="." method="_on_quit_pressed"]
