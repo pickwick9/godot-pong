@@ -17,22 +17,21 @@ size = Vector2(1167, 20)
 script = ExtResource("1_ktt8w")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(1.65, 1.65)
 
 [node name="borders" type="Node" parent="."]
 
 [node name="Left" type="Area2D" parent="borders"]
-position = Vector2(-572, 2)
+position = Vector2(-587, 4)
 rotation = 1.5708
 collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="borders/Left"]
-position = Vector2(-1, 0)
+position = Vector2(3, 0)
 shape = SubResource("RectangleShape2D_mk3tg")
 
 [node name="Right" type="Area2D" parent="borders"]
-position = Vector2(573, 4)
+position = Vector2(587, 3)
 rotation = 1.5708
 collision_layer = 0
 collision_mask = 2
@@ -41,7 +40,7 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_mk3tg")
 
 [node name="Top" type="Area2D" parent="borders"]
-position = Vector2(0, -322)
+position = Vector2(-5, -335)
 collision_layer = 0
 collision_mask = 2
 
@@ -50,7 +49,7 @@ position = Vector2(-1.5, -1)
 shape = SubResource("RectangleShape2D_vsm5u")
 
 [node name="Bottom" type="Area2D" parent="borders"]
-position = Vector2(0, 331)
+position = Vector2(1, 337)
 collision_layer = 0
 collision_mask = 2
 

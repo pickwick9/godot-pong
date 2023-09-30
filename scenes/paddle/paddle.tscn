@@ -4,13 +4,13 @@
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ancxq"]
 width = 15
-height = 100
+height = 80
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_unndh"]
-size = Vector2(15, 100)
+size = Vector2(15, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_oa4f1"]
-size = Vector2(15, 100)
+size = Vector2(15, 80)
 
 [node name="paddle" type="CharacterBody2D"]
 script = ExtResource("1_mc4bq")
